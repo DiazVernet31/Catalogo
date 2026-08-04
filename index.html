@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VENTASLG.CCS · Catálogo de Productos</title>
+    <!-- SDK de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Enlace a tu archivo de estilos externo -->
+    <link rel="stylesheet" href="styles/estilos_Clientes.css">
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-logo">VENTAS<span>LG</span>.CCS</div>
+                <div class="brand-rif">RIF J-50703577-8</div>
+            </div>
+            
+            <div class="header-search">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." />
+                <button id="searchBtn">Buscar</button>
+            </div>
+
+            <div class="header-right-container">
+                <div class="header-cart">
+                    🛒 Carrito <span id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <h1>🛍️ Catálogo <strong>VENTASLG.CCS</strong></h1>
+        <p>Explora nuestra colección de productos de alta calidad. ¡Encuentra lo que necesitas!</p>
+        <div class="highlight">✨ Calidad y confianza desde 2010</div>
+    </section>
+
+    <!-- ========== FILTROS DINÁMICOS ========== -->
+    <div class="filters" id="filtersContainer">
+        <span class="filters-label">📂 Categorías:</span>
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <!-- Las categorías se cargarán desde Supabase aquí -->
+        <span style="margin-left:auto;font-size:0.8rem;color:#999;" id="resultsCount">Mostrando <strong id="countNum">0</strong> productos</span>
+    </div>
+
+    <!-- ========== CATÁLOGO ========== -->
+    <div class="catalog-container">
+        <div class="product-grid" id="productGrid">
+            <!-- Los productos se cargan desde Supabase -->
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4>📦 VENTASLG.CCS</h4>
+                <p>Tu tienda de confianza para productos tecnológicos y más.</p>
+                <p style="margin-top:0.5rem;color:#f5c518;">RIF J-50703577-8</p>
+            </div>
+            <div>
+                <h4>📞 Contacto</h4>
+                <p>📧 ventas@ventaslg.ccs</p>
+                <p>📱 +58 412 123 4567</p>
+                <p>📍 Caracas, Venezuela</p>
+            </div>
+            <div>
+                <h4>🔗 Enlaces</h4>
+                <ul>
+                    <li>Políticas de privacidad</li>
+                    <li>Términos y condiciones</li>
+                    <li>Preguntas frecuentes</li>
+                    <li>Cambios y devoluciones</li>
+                </ul>
+            </div>
+            <div>
+                <h4>⏰ Horario</h4>
+                <p>Lun - Vie: 9:00am - 6:00pm</p>
+                <p>Sábado: 9:00am - 2:00pm</p>
+                <p>Domingo: Cerrado</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 <strong>VENTASLG.CCS</strong> · Todos los derechos reservados · Diseñado con 💛
+        </div>
+    </footer>
+
+    <!-- ========== TOAST NOTIFICACIÓN ========== -->
+    <div class="toast" id="toast">
+            <span class="toast-icon">✅</span>
+            <span id="toastMessage">Producto añadido al carrito</span>
+        </div>
+            <div class="cart-modal-overlay" id="cartModalOverlay">
+        <div class="cart-modal">
+            <div class="cart-header">
+                <h3>Tu Carrito</h3>
+                <button class="cart-close-btn" id="cartCloseBtn">&times;</button>
+            </div>
+            <div class="cart-body" id="cartBody">
+                <!-- Aquí se cargarán los productos dinámicamente -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total-row">
+                    <span>Total:</span>
+                    <strong id="cartTotal">$0.00</strong>
+                </div>
+                <button class="btn-checkout">Proceder al pago</button>
+            </div>
+        </div>
+    </div>
+    <!-- Enlace a tu archivo de JavaScript externo -->
+    <script src="scripts/clientes.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VENTASLG.CCS · Gestión de Productos</title>
+    <link rel="stylesheet" href="styles/estilos.css" />
+</head>
+<body>
+
+    <div class="app" id="app" style="display: none;">
+        <div class="brand-ribbon">
+            <span>VENTASLG.CCS</span> · RIF J-50703577-8
+        </div>
+
+        <div class="page-header">
+            <h2 class="page-title">📦 Mis Productos</h2>
+            <!-- Contenedor flex para botones -->
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                <button onclick="logout()" style="background: #ff4d4d; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 0.8rem;">Cerrar Sesión</button>
+                <button class="btn-agregar" id="btnAbrirModalProducto">＋ Agregar producto</button>
+            </div>
+        </div>
+        <!-- Barra de Categorías / Catálogos -->
+        <div class="categorias-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px;">
+            <span style="font-weight: bold; color: #444;">📁 Categorías:</span>
+            <div id="listaCategorias" style="display: flex; gap: 8px; align-items: center;">
+                <!-- Se cargarán dinámicamente desde JS -->
+            </div>
+            <button id="btnGestionarCategorias" style="background: #f0ad4e; color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; white-space: nowrap;">⚙️ Gestionar</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <div class="empty-message">✨ No hay productos aún. Haz clic en "Agregar producto".</div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal-overlay" id="modalProducto">
+            <div class="modal-card">
+                <h3>Nuevo Producto</h3>
+                <label>Nombre <span class="obligatorio">*</span></label>
+                <input type="text" id="inputNombre" placeholder="Nombre del producto">
+                
+                <div class="modal-row">
+                    <div class="field-group">
+                        <label>Precio <span class="obligatorio">*</span></label>
+                        <input type="number" id="inputPrecio" placeholder="0.00">
+                    </div>
+                </div>
+                
+                <label>Imagen <span class="obligatorio">*</span></label>
+                <div class="image-upload-wrapper">
+                    <input type="file" id="inputImagen" accept="image/*">
+                    <img id="previewMini" class="preview-mini" src="" alt="Preview">
+                    <button id="btnLimpiarImagen" style="display:none; color:red; background:none; border:none; cursor:pointer;">X</button>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-cancelar" id="btnCancelarProducto">Cancelar</button>
+                    <button class="btn-guardar" id="btnGuardarProducto">Guardar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login -->
+    <div id="loginForm" style="display: none; padding: 20px;">
+        <h2>Acceso Administrador</h2>
+        <input type="email" id="email" placeholder="Correo" />
+        <input type="password" id="password" placeholder="Contraseña" />
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        window.supabaseClient = supabase.createClient(
+            'https://njaqtzpympuvaoymxazv.supabase.co', 
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qYXF0enB5bXB1dmFveW14YXp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyMTg5MjksImV4cCI6MjA5OTc5NDkyOX0.S0dwgx29tCd6xTfsgqjqqqlLECeFVRjnoNIMJH2tXv0' 
+        );
+
+        async function login() {
+            const { error } = await window.supabaseClient.auth.signInWithPassword({
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+            });
+            if (error) alert("Error: " + error.message); else location.reload();
+        }
+        async function logout() {
+            await window.supabaseClient.auth.signOut();
+            location.reload();
+        }
+        async function verificarInicio() {
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+            if (session) document.getElementById('app').style.display = 'block';
+            else document.getElementById('loginForm').style.display = 'block';
+        }
+        verificarInicio();
+    </script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

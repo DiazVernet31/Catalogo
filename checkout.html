@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VENTASLG.CCS · Finalizar Compra</title>
+    <link rel="stylesheet" href="styles/estilos_Clientes.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f5f7;
+            color: #333;
+        }
+
+        /* Cabecera blanca idéntica a la del catálogo */
+        .header {
+            background: #ffffff;
+            border-bottom: 3px solid #ffc107;
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-logo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e1e1e;
+            text-decoration: none;
+        }
+
+        .brand-logo a span {
+            background-color: #ffc107;
+            color: #1e1e1e;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .brand-rif {
+            font-size: 0.8rem;
+            color: #555;
+            border: 1px solid #ffc107;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .header-cart-btn {
+            background: transparent;
+            border: 2px solid #ffc107;
+            color: #1e1e1e;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .header-cart-btn:hover {
+            background: #ffc107;
+        }
+
+        /* Contenedor Principal */
+        .checkout-container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+        }
+
+        @media(max-width: 900px) {
+            .checkout-container { grid-template-columns: 1fr; }
+        }
+
+        .checkout-box {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid #ffc107;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        .checkout-box h2 {
+            font-size: 1.3rem;
+            color: #1e1e1e;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ffc107;
+            padding-bottom: 0.5rem;
+        }
+
+        .billing-products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .billing-product-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .billing-product-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .billing-product-details {
+            flex-grow: 1;
+        }
+
+        .billing-product-details h4 {
+            font-size: 1rem;
+            color: #1e1e1e;
+            margin-bottom: 0.3rem;
+        }
+
+        .billing-product-details p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .billing-product-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #b8860b;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: #1e1e1e;
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .btn-checkout {
+            display: block;
+            width: 100%;
+            background: #ffc107;
+            color: #1e1e1e;
+            text-align: center;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-checkout:hover {
+            background: #e0a800;
+        }
+
+        .whatsapp-banner {
+            background: #e1f5fe;
+            border: 1px solid #0288d1;
+            color: #01579b;
+            padding: 0.9rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabecera Blanca -->
+    <header class="header">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-logo"><a href="index.html">VENTAS<span>LG</span>.CCS</a></div>
+                <div class="brand-rif">RIF J-50703577-8</div>
+            </div>
+            <div class="header-right-container">
+                <a href="index.html" class="header-cart-btn">
+                    ← Volver al catálogo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="checkout-container">
+        <!-- DETALLES DE FACTURACIÓN (PRODUCTOS SELECCIONADOS) -->
+        <div class="checkout-box">
+            <h2>DETALLES DE FACTURACIÓN</h2>
+            
+            <div class="billing-products-list" id="billingProductsContainer">
+                <p style="text-align: center; color: #666;">Cargando productos...</p>
+            </div>
+
+            <div class="order-total">
+                <span>Total a Pagar:</span>
+                <span id="summaryTotal">$0.00 USD</span>
+            </div>
+        </div>
+
+        <!-- ACCIÓN A WHATSAPP -->
+        <div class="checkout-box">
+            <h2>MÉTODO DE PAGO</h2>
+            
+            <button type="button" class="btn-checkout" onclick="enviarPedidoWhatsApp()">
+                REALIZAR PEDIDO POR WHATSAPP
+            </button>
+
+            <div class="whatsapp-banner">
+                📸 Al presionar se abrirá WhatsApp con el detalle de tus productos para procesar tu pago.
+            </div>
+        </div>
+    </div>
+
+<script>
+        let productosCheckout = [];
+
+        function cargarProductosCarrito() {
+            try {
+                productosCheckout = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const contenedor = document.getElementById('billingProductsContainer');
+                contenedor.innerHTML = '';
+
+                let totalGeneral = 0;
+
+                if (!productosCheckout || productosCheckout.length === 0) {
+                    contenedor.innerHTML = '<p style="color: #888; text-align:center;">No hay productos en el carrito.</p>';
+                    document.getElementById('summaryTotal').innerText = '$0.00 USD';
+                    return;
+                }
+
+                productosCheckout.forEach((prod, index) => {
+                    let precio = Number(prod.precio) || 0;
+                    let cantidad = Number(prod.cantidad) || 1;
+                    let subtotal = precio * cantidad;
+                    totalGeneral += subtotal;
+
+                    let imagenProd = prod.imagen_url || prod.imagen || prod.image || 'https://via.placeholder.com/150';
+                    let nombreProd = prod.nombre || prod.titulo || 'Producto sin nombre';
+
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'billing-product-item';
+                    
+                    // Estructura modificada para colocar los controles y el botón de eliminar al lado del precio
+                    itemDiv.innerHTML = `
+                        <img src="${imagenProd}" alt="${nombreProd}" class="billing-product-img">
+                        <div class="billing-product-details">
+                            <h4>${nombreProd}</h4>
+                            <p>Precio unitario: $${precio.toFixed(2)}</p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                            <div class="billing-product-price">${subtotal.toFixed(2)} US$</div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <button onclick="cambiarCantidad(${index}, -1)" style="padding: 2px 8px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 4px;">-</button>
+                                <span style="font-size: 0.9rem; font-weight: bold; min-width: 20px; text-align: center;">${cantidad}</span>
+                                <button onclick="cambiarCantidad(${index}, 1)" style="padding: 2px 8px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 4px;">+</button>
+                                <button onclick="eliminarProducto(${index})" style="background: #d9534f; color: white; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; margin-left: 5px;">Eliminar</button>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.appendChild(itemDiv);
+                });
+
+                document.getElementById('summaryTotal').innerText = `$${totalGeneral.toFixed(2)} USD`;
+
+            } catch (err) {
+                console.error("Error al cargar el carrito:", err);
+                document.getElementById('billingProductsContainer').innerHTML = '<p style="color: red; text-align:center;">Error al cargar los productos.</p>';
+            }
+        }
+
+        // Funciones para modificar el carrito desde la pasarela de pago
+        function cambiarCantidad(index, delta) {
+            if (productosCheckout[index]) {
+                productosCheckout[index].cantidad += delta;
+                if (productosCheckout[index].cantidad <= 0) {
+                    productosCheckout.splice(index, 1);
+                }
+                // Actualizamos el localStorage y volvemos a renderizar
+                localStorage.setItem('cart', JSON.stringify(productosCheckout));
+                cargarProductosCarrito();
+            }
+        }
+
+        function eliminarProducto(index) {
+            if (productosCheckout[index]) {
+                productosCheckout.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(productosCheckout));
+                cargarProductosCarrito();
+            }
+        }
+
+        function enviarPedidoWhatsApp() {
+            const telefonoEmpresa = "584125719323"; // Reemplaza con tu número real de WhatsApp
+            let totalGeneral = 0;
+
+            if (!productosCheckout || productosCheckout.length === 0) {
+                alert("No hay productos en el carrito para procesar el pedido.");
+                return;
+            }
+
+            let mensaje = `Hola VENTASLG.CCS, quiero realizar el siguiente pedido:\n\n`;
+
+            productosCheckout.forEach(prod => {
+                let precio = Number(prod.precio) || 0;
+                let cantidad = Number(prod.cantidad) || 1;
+                let subtotal = precio * cantidad;
+                totalGeneral += subtotal;
+                let nombreProd = prod.nombre || prod.titulo || 'Producto';
+                mensaje += `- ${nombreProd} (x${cantidad}) - ${subtotal.toFixed(2)} US$\n`;
+            });
+
+            mensaje += `\n*Total a Pagar:* $${totalGeneral.toFixed(2)} USD`;
+
+            const urlWhatsApp = `https://wa.me/${telefonoEmpresa}?text=${encodeURIComponent(mensaje)}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+
+        window.addEventListener('DOMContentLoaded', cargarProductosCarrito);
+</script>
+</body>
+</html>
