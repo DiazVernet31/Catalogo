@@ -3,115 +3,99 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VENTASLG.CCS · Catálogo de Productos</title>
-    <!-- SDK de Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Enlace a tu archivo de estilos externo -->
-    <link rel="stylesheet" href="styles/estilos_Clientes.css">
+    <title>VENTASLG.CCS · Gestión de Productos</title>
+    <link rel="stylesheet" href="styles/estilos.css" />
 </head>
 <body>
-    <!-- ========== HEADER ========== -->
-    <header class="header">
-        <div class="header-content">
-            <div class="brand">
-                <div class="brand-logo">VENTAS<span>LG</span>.CCS</div>
-                <div class="brand-rif">RIF J-50703577-8</div>
-            </div>
-            
-            <div class="header-search">
-                <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." />
-                <button id="searchBtn">Buscar</button>
-            </div>
 
-            <div class="header-right-container">
-                <div class="header-cart">
-                    🛒 Carrito <span id="cartCount">0</span>
-                </div>
+    <div class="app" id="app" style="display: none;">
+        <div class="brand-ribbon">
+            <span>VENTASLG.CCS</span> · RIF J-50703577-8
+        </div>
+
+        <div class="page-header">
+            <h2 class="page-title">📦 Mis Productos</h2>
+            <!-- Contenedor flex para botones -->
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                <button onclick="logout()" style="background: #ff4d4d; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 0.8rem;">Cerrar Sesión</button>
+                <button class="btn-agregar" id="btnAbrirModalProducto">＋ Agregar producto</button>
             </div>
         </div>
-    </header>
+        <!-- Barra de Categorías / Catálogos -->
+        <div class="categorias-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px;">
+            <span style="font-weight: bold; color: #444;">📁 Categorías:</span>
+            <div id="listaCategorias" style="display: flex; gap: 8px; align-items: center;">
+                <!-- Se cargarán dinámicamente desde JS -->
+            </div>
+            <button id="btnGestionarCategorias" style="background: #f0ad4e; color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; white-space: nowrap;">⚙️ Gestionar</button>
+        </div>
 
-    <!-- ========== HERO ========== -->
-    <section class="hero">
-        <h1>🛍️ Catálogo <strong>VENTASLG.CCS</strong></h1>
-        <p>Explora nuestra colección de productos de alta calidad. ¡Encuentra lo que necesitas!</p>
-        <div class="highlight">✨ Calidad y confianza desde 2010</div>
-    </section>
-
-    <!-- ========== FILTROS DINÁMICOS ========== -->
-    <div class="filters" id="filtersContainer">
-        <span class="filters-label">📂 Categorías:</span>
-        <button class="filter-btn active" data-filter="all">Todos</button>
-        <!-- Las categorías se cargarán desde Supabase aquí -->
-        <span style="margin-left:auto;font-size:0.8rem;color:#999;" id="resultsCount">Mostrando <strong id="countNum">0</strong> productos</span>
-    </div>
-
-    <!-- ========== CATÁLOGO ========== -->
-    <div class="catalog-container">
         <div class="product-grid" id="productGrid">
-            <!-- Los productos se cargan desde Supabase -->
+            <div class="empty-message">✨ No hay productos aún. Haz clic en "Agregar producto".</div>
         </div>
-    </div>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>
-                <h4>📦 VENTASLG.CCS</h4>
-                <p>Tu tienda de confianza para productos tecnológicos y más.</p>
-                <p style="margin-top:0.5rem;color:#f5c518;">RIF J-50703577-8</p>
-            </div>
-            <div>
-                <h4>📞 Contacto</h4>
-                <p>📧 ventas@ventaslg.ccs</p>
-                <p>📱 +58 412 123 4567</p>
-                <p>📍 Caracas, Venezuela</p>
-            </div>
-            <div>
-                <h4>🔗 Enlaces</h4>
-                <ul>
-                    <li>Políticas de privacidad</li>
-                    <li>Términos y condiciones</li>
-                    <li>Preguntas frecuentes</li>
-                    <li>Cambios y devoluciones</li>
-                </ul>
-            </div>
-            <div>
-                <h4>⏰ Horario</h4>
-                <p>Lun - Vie: 9:00am - 6:00pm</p>
-                <p>Sábado: 9:00am - 2:00pm</p>
-                <p>Domingo: Cerrado</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 <strong>VENTASLG.CCS</strong> · Todos los derechos reservados · Diseñado con 💛
-        </div>
-    </footer>
-
-    <!-- ========== TOAST NOTIFICACIÓN ========== -->
-    <div class="toast" id="toast">
-            <span class="toast-icon">✅</span>
-            <span id="toastMessage">Producto añadido al carrito</span>
-        </div>
-            <div class="cart-modal-overlay" id="cartModalOverlay">
-        <div class="cart-modal">
-            <div class="cart-header">
-                <h3>Tu Carrito</h3>
-                <button class="cart-close-btn" id="cartCloseBtn">&times;</button>
-            </div>
-            <div class="cart-body" id="cartBody">
-                <!-- Aquí se cargarán los productos dinámicamente -->
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total-row">
-                    <span>Total:</span>
-                    <strong id="cartTotal">$0.00</strong>
+        <!-- Modal -->
+        <div class="modal-overlay" id="modalProducto">
+            <div class="modal-card">
+                <h3>Nuevo Producto</h3>
+                <label>Nombre <span class="obligatorio">*</span></label>
+                <input type="text" id="inputNombre" placeholder="Nombre del producto">
+                
+                <div class="modal-row">
+                    <div class="field-group">
+                        <label>Precio <span class="obligatorio">*</span></label>
+                        <input type="number" id="inputPrecio" placeholder="0.00">
+                    </div>
                 </div>
-                <button class="btn-checkout">Proceder al pago</button>
+                
+                <label>Imagen <span class="obligatorio">*</span></label>
+                <div class="image-upload-wrapper">
+                    <input type="file" id="inputImagen" accept="image/*">
+                    <img id="previewMini" class="preview-mini" src="" alt="Preview">
+                    <button id="btnLimpiarImagen" style="display:none; color:red; background:none; border:none; cursor:pointer;">X</button>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-cancelar" id="btnCancelarProducto">Cancelar</button>
+                    <button class="btn-guardar" id="btnGuardarProducto">Guardar Producto</button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Enlace a tu archivo de JavaScript externo -->
-    <script src="scripts/clientes.js"></script>
+
+    <!-- Login -->
+    <div id="loginForm" style="display: none; padding: 20px;">
+        <h2>Acceso Administrador</h2>
+        <input type="email" id="email" placeholder="Correo" />
+        <input type="password" id="password" placeholder="Contraseña" />
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        window.supabaseClient = supabase.createClient(
+            'https://njaqtzpympuvaoymxazv.supabase.co', 
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qYXF0enB5bXB1dmFveW14YXp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyMTg5MjksImV4cCI6MjA5OTc5NDkyOX0.S0dwgx29tCd6xTfsgqjqqqlLECeFVRjnoNIMJH2tXv0' 
+        );
+
+        async function login() {
+            const { error } = await window.supabaseClient.auth.signInWithPassword({
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+            });
+            if (error) alert("Error: " + error.message); else location.reload();
+        }
+        async function logout() {
+            await window.supabaseClient.auth.signOut();
+            location.reload();
+        }
+        async function verificarInicio() {
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+            if (session) document.getElementById('app').style.display = 'block';
+            else document.getElementById('loginForm').style.display = 'block';
+        }
+        verificarInicio();
+    </script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
